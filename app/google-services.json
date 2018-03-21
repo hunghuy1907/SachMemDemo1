@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "965642749726",
+    "project_id": "keynote-197908"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:965642749726:android:4e42d3998f641f48",
+        "android_client_info": {
+          "package_name": "com.hungth.keynote"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "965642749726-r5s9dm2vgnbtmakj0akqh0oclnakoclc.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "965642749726-2mgle46ql7hcifu678buv12rcjcn00j3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hungth.keynote",
+            "certificate_hash": "f6a42d7482f8ef64106f5a5b24a1a69b48a60649"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXP3H-LlOQR4kYFSXC4Zihggz1NB2HPps"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
