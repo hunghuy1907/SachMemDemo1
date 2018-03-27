@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends Activity {
+
     private static final String DEBUG_TAG = "HttpExample";
 //    ArrayList<Team> teams = new ArrayList<Team>();
     ListView listview;

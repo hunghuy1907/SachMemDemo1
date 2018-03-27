@@ -63,6 +63,7 @@ public class DownloadWebpageTask extends AsyncTask<String, Void, String> {
 
             String contentAsString = convertStreamToString(is);
             Log.d("ahaha", contentAsString);
+
             return contentAsString;
         } finally {
             if (is != null) {
