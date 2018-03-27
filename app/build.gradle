@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "23.0.1"
     defaultConfig {
         applicationId "com.hungth.sachmemdemo"
         minSdkVersion 19
@@ -44,7 +43,11 @@ dependencies {
     }
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
     implementation 'com.squareup.okhttp:okhttp:2.4.0'
     implementation 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.google.code.findbugs'
+    })
 }
