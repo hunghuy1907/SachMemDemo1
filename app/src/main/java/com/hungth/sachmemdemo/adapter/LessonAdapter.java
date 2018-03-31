@@ -1,17 +1,15 @@
 package com.hungth.sachmemdemo.adapter;
 
 import android.content.Context;
-import android.support.design.widget.NavigationView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.hungth.sachmemdemo.OnItemClickListenner;
+import com.hungth.sachmemdemo.view.OnItemClickListenner;
 import com.hungth.sachmemdemo.R;
 import com.hungth.sachmemdemo.model.Lesson;
-import com.hungth.sachmemdemo.model.Unit;
 
 import java.util.List;
 

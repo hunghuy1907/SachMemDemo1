@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.hungth.sachmemdemo.OnItemClickListenner;
+import com.hungth.sachmemdemo.view.OnItemClickListenner;
 import com.hungth.sachmemdemo.R;
 import com.hungth.sachmemdemo.adapter.BookAdapter;
 import com.hungth.sachmemdemo.model.Book;

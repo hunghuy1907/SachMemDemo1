@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hungth.sachmemdemo.GetDataFromSheet;
+import com.hungth.sachmemdemo.database.GetDataFromSheet;
 import com.hungth.sachmemdemo.R;
 
 import java.io.IOException;
@@ -63,11 +63,11 @@ public class ReadAndTickFragment extends Fragment implements View.OnClickListene
         btnSelectB.setOnClickListener(this);
         btnSelectC.setOnClickListener(this);
 
-        getDataFromSheet = new GetDataFromSheet();
+//        getDataFromSheet = new GetDataFromSheet();
     }
 
     private void getData() throws IOException {
-        strSelects = getDataFromSheet.getData();
+//        strSelects = getDataFromSheet.getData();
         notes = new ArrayList<>();
 //        strSelects.add("\"5 cộng 3 bằng mấy?\n" +
 //                "{8/3/5}\"");

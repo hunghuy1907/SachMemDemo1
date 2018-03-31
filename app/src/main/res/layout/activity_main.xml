@@ -7,13 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="8dp"
-    tools:context="com.hungth.sachmemdemo.MainActivity">
-
-    <ImageView
-        android:background="@drawable/ic_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-         />
+    tools:context="com.hungth.sachmemdemo.view.MainActivity">
 
     <FrameLayout
         android:layout_marginTop="8dp"

@@ -9,21 +9,17 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.hungth.sachmemdemo.OnItemClickListenner;
+import com.hungth.sachmemdemo.view.OnItemClickListenner;
 import com.hungth.sachmemdemo.R;
 import com.hungth.sachmemdemo.adapter.ClassAdapter;
 import com.hungth.sachmemdemo.model.Class;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by Admin on 2/3/2018.

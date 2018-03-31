@@ -1,4 +1,4 @@
-package com.hungth.sachmemdemo;
+package com.hungth.sachmemdemo.view;
 
 import android.view.View;
 

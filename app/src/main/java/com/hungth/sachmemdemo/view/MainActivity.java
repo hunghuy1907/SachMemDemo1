@@ -1,4 +1,4 @@
-package com.hungth.sachmemdemo;
+package com.hungth.sachmemdemo.view;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
+import com.hungth.sachmemdemo.R;
 import com.hungth.sachmemdemo.adapter.ClassAdapter;
 import com.hungth.sachmemdemo.fragment.BookFragment;
 import com.hungth.sachmemdemo.fragment.ClassFragment;
