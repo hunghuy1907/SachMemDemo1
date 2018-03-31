@@ -33,6 +33,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.ValueRange;
+import com.hungth.sachmemdemo.model.Question;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,6 +56,7 @@ public class GetDataFromSheet
     private static final String PREF_ACCOUNT_NAME = "accountName";
     private static final String[] SCOPES = {SheetsScopes.SPREADSHEETS_READONLY};
     private Activity activity;
+    private ArrayList<Question> valueQuestions;
 
 
     public GetDataFromSheet(Activity activity) {
@@ -62,10 +64,12 @@ public class GetDataFromSheet
         mCredential = GoogleAccountCredential.usingOAuth2(
                 activity, Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());
+        valueQuestions = new ArrayList<>();
     }
 
-    public void getData() {
+    public ArrayList<Question> getData() {
         getResultsFromApi();
+        return valueQuestions;
     }
 
     /**
@@ -78,11 +82,9 @@ public class GetDataFromSheet
     private void getResultsFromApi() {
         if (!isGooglePlayServicesAvailable()) {
             acquireGooglePlayServices();
-        }
-        else if (mCredential.getSelectedAccountName() == null) {
+        } else if (mCredential.getSelectedAccountName() == null) {
             chooseAccount();
-        }
-        else if (!isDeviceOnline()) {
+        } else if (!isDeviceOnline()) {
             Toast.makeText(activity, "No network connection available.", Toast.LENGTH_LONG).show();
         } else {
             Log.d(TAG, "getResultsFromApi: ");
@@ -128,14 +130,13 @@ public class GetDataFromSheet
                 ListView lv = new ListView(activity);
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                        (activity,android.R.layout.simple_list_item_1, android.R.id.text1,
+                        (activity, android.R.layout.simple_list_item_1, android.R.id.text1,
                                 gUsernameList);
 
                 lv.setAdapter(adapter);
                 lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                    {
-                        String accountName =gUsernameList.get(position);
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        String accountName = gUsernameList.get(position);
                         Log.d(TAG, "chọn");
                         if (accountName != null) {
                             SharedPreferences settings =
@@ -173,7 +174,6 @@ public class GetDataFromSheet
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-
     }
 
 
@@ -243,8 +243,8 @@ public class GetDataFromSheet
 
         private List<String> getDataFromApi() throws IOException {
             Log.d(TAG, "getDataFromApi: ");
-            String spreadsheetId = "1-WCM69PUgFlHtU21eJvTGcofkH5UGeeQW0Dd785NVAQ";
-            String range = "thongTin!A3:U";
+            String spreadsheetId = "1CZ0C5FhQcCAzVDpSJ28bz7Y3K7lYPddgp0pzR_a35Qg";
+            String range = "demo!A3:L";
             List<String> results = new ArrayList<String>();
             ValueRange response = this.mService.spreadsheets().values()
                     .get(spreadsheetId, range)
@@ -254,6 +254,9 @@ public class GetDataFromSheet
             if (values != null) {
                 results.add("Name, Major");
                 for (List row : values) {
+                    String chiaLop = row.get(5).toString();
+                    String typeQuestion = row.get(8).toString();
+                    String tempValue = row.get(6).toString();
                     String temp = row.get(2) + ", " + row.get(3) + ", " + row.get(5) + ", " + row.get(7);
                     Log.d("demoooo", temp);
                     results.add(temp);

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:background="@drawable/bacground"
     android:orientation="vertical">
 
     <LinearLayout
@@ -41,6 +42,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/textView"
             style="@style/TextValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,19 +52,32 @@
             android:textColor="@android:color/black"
             android:textSize="20sp" />
 
-        <EditText
-            android:id="@+id/edt_password"
-
-            style="@style/TextValue"
+        <LinearLayout
             android:layout_width="300dp"
-            android:layout_height="42dp"
+            android:layout_height="49dp"
             android:layout_marginTop="4dp"
             android:background="@drawable/bg_edt_login"
-            android:hint="Mật khẩu ..."
-            android:inputType="textPassword"
-            android:paddingLeft="8dp"
-            android:textColor="@android:color/black"
-            android:textSize="21sp" />
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edt_password"
+                style="@style/TextValue"
+                android:layout_width="270dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:hint="Mật khẩu ..."
+                android:inputType="textPassword"
+                android:paddingLeft="8dp"
+                android:textColor="@android:color/black"
+                android:textSize="21sp" />
+
+            <ImageView
+                android:id="@+id/img_hide_password_in_login"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/icon_hide_password" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -112,7 +127,7 @@
     <LinearLayout
         android:layout_width="300dp"
         android:layout_height="100dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="49dp"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -120,19 +135,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="34dp"
+            android:paddingRight="34dp">
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/btn_login_with_facebook"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="49dp"
                 android:layout_gravity="center_horizontal" />
 
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/btn_login_with_google"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="49dp"
+                android:layout_marginTop="12dp"
                 android:src="@drawable/icon_google" />
         </LinearLayout>
     </LinearLayout>
