@@ -44,8 +44,8 @@ dependencies {
         exclude group: 'org.apache.httpcomponents'
     }
 
-    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
-    implementation 'com.google.android.gms:play-services-auth:11.8.0'
+    implementation 'com.facebook.android:facebook-android-sdk:4.31.0'
+    implementation 'com.google.android.gms:play-services-auth:12.0.1'
 
     implementation 'com.google.apis:google-api-services-speech:v1beta1-rev336-1.22.0'
     implementation 'com.google.apis:google-api-services-language:v1beta2-rev6-1.22.0'

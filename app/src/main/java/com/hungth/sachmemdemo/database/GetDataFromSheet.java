@@ -57,7 +57,7 @@ public class GetDataFromSheet
     private static final String[] SCOPES = {SheetsScopes.SPREADSHEETS_READONLY};
     private Activity activity;
     private ArrayList<Question> valueQuestions;
-
+    private ArrayList<String> stringDataQuestion;
 
     public GetDataFromSheet(Activity activity) {
         this.activity = activity;
@@ -65,11 +65,17 @@ public class GetDataFromSheet
                 activity, Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());
         valueQuestions = new ArrayList<>();
+        stringDataQuestion = new ArrayList<>();
     }
 
     public ArrayList<Question> getData() {
         getResultsFromApi();
         return valueQuestions;
+    }
+
+    public ArrayList<String> getStringDataQuestion() {
+        getResultsFromApi();
+        return stringDataQuestion;
     }
 
     /**
@@ -254,11 +260,27 @@ public class GetDataFromSheet
             if (values != null) {
                 results.add("Name, Major");
                 for (List row : values) {
-                    String chiaLop = row.get(5).toString();
-                    String typeQuestion = row.get(8).toString();
+                    String tempChiaLop = row.get(5).toString();
+                    String chiaLop = tempChiaLop.trim();
+                    String tempTypeQuestion = row.get(8).toString();
+                    String typeQuestion = tempTypeQuestion.trim();
                     String tempValue = row.get(6).toString();
-                    String temp = row.get(2) + ", " + row.get(3) + ", " + row.get(5) + ", " + row.get(7);
+                    int x = tempValue.indexOf('{');
+                    String valueQuestion = "";
+                    for (int i = 0; i < x; i++) {
+                        valueQuestion += tempValue.charAt(i);
+                    }
+                    x++;
+                    String resultQuestion = "";
+                    while (tempValue.charAt(x) != '}') {
+                        resultQuestion += tempValue.charAt(x);
+                        x++;
+                    }
+                    String temp = "Lop:_" + chiaLop + "_typeQuestion:_" + typeQuestion +
+                            "_valueQuestion_" + valueQuestion + "_resultQuestin_" + resultQuestion;
                     Log.d("demoooo", temp);
+                    stringDataQuestion.add(temp);
+                    valueQuestions.add(new Question(chiaLop, typeQuestion, valueQuestion, resultQuestion));
                     results.add(temp);
                 }
             }
