@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.hungth.sachmemdemo.R;
 import com.hungth.sachmemdemo.adapter.ClassAdapter;
+import com.hungth.sachmemdemo.database.GetDataFromSheet;
 import com.hungth.sachmemdemo.fragment.BookFragment;
 import com.hungth.sachmemdemo.fragment.ClassFragment;
 
@@ -20,13 +21,18 @@ public class MainActivity extends AppCompatActivity {
     private ClassAdapter classAdapter;
     private List<String> classNames;
     private RecyclerView rcvClass;
+    private GetDataFromSheet getDataFromSheet ;
 
+    public List<String> getClassNames() {
+        return classNames;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        getDataFromSheet= new GetDataFromSheet(this);
+        classNames=getDataFromSheet.getStringDataQuestion();
         showMainFragment();
 
     }

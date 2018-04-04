@@ -45,7 +45,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class GetDataFromSheet
         implements EasyPermissions.PermissionCallbacks {
-    private static final String TAG = "demooo";
+    private static final String TAG = "demooo: ";
     GoogleAccountCredential mCredential;
 
     static final int REQUEST_ACCOUNT_PICKER = 1000;
@@ -74,6 +74,7 @@ public class GetDataFromSheet
     }
 
     public ArrayList<String> getStringDataQuestion() {
+        Log.d("ghg", "getStringDataQuestion: ");
         getResultsFromApi();
         return stringDataQuestion;
     }
@@ -130,8 +131,10 @@ public class GetDataFromSheet
                     gUsernameList.add(account.name);
                 }
 
+                Log.d(TAG, "show dialog ");
                 final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                 builder.setTitle("Choose you gmail-account");
+
 
                 ListView lv = new ListView(activity);
 
@@ -140,6 +143,7 @@ public class GetDataFromSheet
                                 gUsernameList);
 
                 lv.setAdapter(adapter);
+                Log.d(TAG, "khong show duoc");
                 lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         String accountName = gUsernameList.get(position);
@@ -150,7 +154,6 @@ public class GetDataFromSheet
                             SharedPreferences.Editor editor = settings.edit();
                             editor.putString(PREF_ACCOUNT_NAME, accountName);
                             editor.apply();
-                            mCredential.setSelectedAccountName(accountName);
                             getResultsFromApi();
                         }
                     }
@@ -255,34 +258,44 @@ public class GetDataFromSheet
             ValueRange response = this.mService.spreadsheets().values()
                     .get(spreadsheetId, range)
                     .execute();
-            Log.d(TAG, "Loi");
+//            Log.d(TAG, "Loi");
             List<List<Object>> values = response.getValues();
             if (values != null) {
+//                Log.d(TAG,"size" +values.size());
                 results.add("Name, Major");
                 for (List row : values) {
+//                    Log.d(TAG, "sao sao sao ");
                     String tempChiaLop = row.get(5).toString();
                     String chiaLop = tempChiaLop.trim();
-                    String tempTypeQuestion = row.get(8).toString();
+                    String tempTypeQuestion = row.get(9).toString();
+//                    Log.d(TAG, "tempTypeQuestion: "+tempTypeQuestion);
                     String typeQuestion = tempTypeQuestion.trim();
-                    String tempValue = row.get(6).toString();
+                    String tempValue = row.get(7).toString();
+                    stringDataQuestion.add(tempValue);
+                    Log.d("ghghg", "size "+ stringDataQuestion.size());
                     int x = tempValue.indexOf('{');
                     String valueQuestion = "";
                     for (int i = 0; i < x; i++) {
                         valueQuestion += tempValue.charAt(i);
                     }
                     x++;
+                    Log.d(TAG, "temp Value: "+ tempValue);
                     String resultQuestion = "";
+//                    Log.d(TAG, "truoc while ");
                     while (tempValue.charAt(x) != '}') {
                         resultQuestion += tempValue.charAt(x);
                         x++;
                     }
+//                    Log.d(TAG, "wao trong for");
                     String temp = "Lop:_" + chiaLop + "_typeQuestion:_" + typeQuestion +
                             "_valueQuestion_" + valueQuestion + "_resultQuestin_" + resultQuestion;
-                    Log.d("demoooo", temp);
-                    stringDataQuestion.add(temp);
+                    Log.d(TAG, temp);
+
                     valueQuestions.add(new Question(chiaLop, typeQuestion, valueQuestion, resultQuestion));
                     results.add(temp);
                 }
+            }else {
+//                Log.d(TAG, "nulll");
             }
             return results;
         }

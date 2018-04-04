@@ -3,6 +3,7 @@ package com.hungth.sachmemdemo.fragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.hungth.sachmemdemo.database.GetDataFromSheet;
 import com.hungth.sachmemdemo.R;
+import com.hungth.sachmemdemo.view.MainActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -63,10 +65,12 @@ public class ReadAndTickFragment extends Fragment implements View.OnClickListene
         btnSelectB.setOnClickListener(this);
         btnSelectC.setOnClickListener(this);
 
+
 //        getDataFromSheet = new GetDataFromSheet();
     }
 
     private void getData() throws IOException {
+
 //        strSelects = getDataFromSheet.getData();
         notes = new ArrayList<>();
 //        strSelects.add("\"5 cộng 3 bằng mấy?\n" +
@@ -74,6 +78,10 @@ public class ReadAndTickFragment extends Fragment implements View.OnClickListene
     }
 
     private void initQuestion() {
+        strSelects= new ArrayList<>();
+//        GetDataFromSheet getDataFromSheet = new GetDataFromSheet((MainActivity) getParentFragment().getActivity());
+        strSelects = ((MainActivity)getActivity()).getClassNames();
+        Log.d("ghghg",  ""+strSelects.size());
         String s = strSelects.get(0);
         int indexOfAnswer = s.indexOf("{") - 1;
         String question = s.substring(1, indexOfAnswer);
