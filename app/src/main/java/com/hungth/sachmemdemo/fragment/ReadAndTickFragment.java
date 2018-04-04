@@ -81,6 +81,7 @@ public class ReadAndTickFragment extends Fragment implements View.OnClickListene
         strSelects= new ArrayList<>();
 //        GetDataFromSheet getDataFromSheet = new GetDataFromSheet((MainActivity) getParentFragment().getActivity());
         strSelects = ((MainActivity)getActivity()).getClassNames();
+
         Log.d("ghghg",  ""+strSelects.size());
         String s = strSelects.get(0);
         int indexOfAnswer = s.indexOf("{") - 1;
