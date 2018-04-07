@@ -123,6 +123,7 @@ public class ReadAndTickFragment extends Fragment implements View.OnClickListene
                 long time= System.currentTimeMillis();
                 while (System.currentTimeMillis()-time<3){
 
+
                 }
                 index++;
                 initQuestion(index);
