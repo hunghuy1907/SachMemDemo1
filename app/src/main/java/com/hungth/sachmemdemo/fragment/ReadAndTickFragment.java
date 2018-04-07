@@ -13,10 +13,12 @@ import android.widget.Toast;
 
 import com.hungth.sachmemdemo.database.GetDataFromSheet;
 import com.hungth.sachmemdemo.R;
+import com.hungth.sachmemdemo.model.Data;
 import com.hungth.sachmemdemo.view.MainActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,15 +27,14 @@ import java.util.List;
 
 public class ReadAndTickFragment extends Fragment implements View.OnClickListener {
     private TextView txtSelectQuestion;
-
     private List<String> strSelects;
-    private List<String> notes;
-
+    private List<Data> datas;
+    private List<Data> datasSelect;
     private int resultTrue;
     private Button btnSelectB;
     private Button btnSelectA;
     private Button btnSelectC;
-    private GetDataFromSheet getDataFromSheet;
+    private int index = 0;
 
     @Nullable
     @Override
@@ -44,15 +45,8 @@ public class ReadAndTickFragment extends Fragment implements View.OnClickListene
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         initializeComponents();
-        try {
-            getData();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        initQuestion();
-        
+        initQuestion(0);
     }
 
     private void initializeComponents() {
@@ -65,44 +59,54 @@ public class ReadAndTickFragment extends Fragment implements View.OnClickListene
         btnSelectB.setOnClickListener(this);
         btnSelectC.setOnClickListener(this);
 
-
-//        getDataFromSheet = new GetDataFromSheet();
-    }
-
-    private void getData() throws IOException {
-
-//        strSelects = getDataFromSheet.getData();
-        notes = new ArrayList<>();
-//        strSelects.add("\"5 cộng 3 bằng mấy?\n" +
-//                "{8/3/5}\"");
-    }
-
-    private void initQuestion() {
-        strSelects= new ArrayList<>();
-//        GetDataFromSheet getDataFromSheet = new GetDataFromSheet((MainActivity) getParentFragment().getActivity());
-        strSelects = ((MainActivity)getActivity()).getClassNames();
-
-        Log.d("ghghg",  ""+strSelects.size());
-        String s = strSelects.get(0);
-        int indexOfAnswer = s.indexOf("{") - 1;
-        String question = s.substring(1, indexOfAnswer);
-        txtSelectQuestion.setText(question);
-        String answer = s.substring(indexOfAnswer);
-        List<Integer> selected = new ArrayList<>();
-        for (int i = 0; i < answer.length(); i++) {
-            if (answer.charAt(i) >= '0' && answer.charAt(i) <= '9') {
-                selected.add(Integer.parseInt((answer.charAt(i) + "").toString()));
+        datasSelect = new ArrayList<>();
+        strSelects = ((MainActivity) getActivity()).getClassNames();
+        datas = ((MainActivity) getActivity()).getDatas();
+        for (int i = 0; i < datas.size(); i++) {
+            if (datas.get(i).getNote().equals("Select") || datas.get(i).getNote().equals("Select and keep order")) {
+                datasSelect.add(datas.get(i));
             }
         }
-        btnSelectA.setText(selected.get(0).toString());
-        btnSelectB.setText(selected.get(1).toString());
-        btnSelectC.setText(selected.get(2).toString());
+    }
 
-        if (selected.size() > 3) {
-            resultTrue = selected.get(3);
-        } else {
-            resultTrue = 0;
+    private void slow() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(3000);
+
+                    Log.d("thread" , "hhhhhh");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+
+    private void initQuestion(int index) {
+        String s = datasSelect.get(index).getQuestionTextAndAnswer();
+        int indexOfAnswer = s.indexOf("{") + 1;
+        int indexOfEndAnswer = s.indexOf("}");
+        String question = s.substring(0, indexOfAnswer - 2);
+        txtSelectQuestion.setText(question);
+        String answer = s.substring(indexOfAnswer, indexOfEndAnswer);
+        String[] selects = answer.split("/");
+        List<Integer> selected = new ArrayList<>();
+        for (int i = 0; i < selects.length; i++) {
+            selected.add(Integer.parseInt(selects[i]));
         }
+        String trueLocation = s.substring(indexOfEndAnswer);
+        for (int i = 0; i < trueLocation.length(); i++) {
+            if (trueLocation.charAt(i) >= '0' && trueLocation.charAt(i) <= 3) {
+                resultTrue = Integer.parseInt(trueLocation.charAt(i) + "");
+                return;
+            }
+        }
+        btnSelectA.setText(selects[0]);
+        btnSelectB.setText(selects[1]);
+        btnSelectC.setText(selects[2]);
     }
 
     @Override
@@ -116,6 +120,12 @@ public class ReadAndTickFragment extends Fragment implements View.OnClickListene
                     btnSelectA.setBackgroundResource(R.drawable.bg_btn_chosse_is_false);
                     Toast.makeText(getActivity(), "Sai rồi", Toast.LENGTH_SHORT).show();
                 }
+                long time= System.currentTimeMillis();
+                while (System.currentTimeMillis()-time<3){
+
+                }
+                index++;
+                initQuestion(index);
                 break;
 
             case R.id.btn_select_B:
@@ -126,6 +136,9 @@ public class ReadAndTickFragment extends Fragment implements View.OnClickListene
                     btnSelectB.setBackgroundResource(R.drawable.bg_btn_chosse_is_false);
                     Toast.makeText(getActivity(), "Sai rồi", Toast.LENGTH_SHORT).show();
                 }
+                slow();
+                index++;
+                initQuestion(index);
                 break;
 
             case R.id.btn_select_C:
@@ -136,6 +149,9 @@ public class ReadAndTickFragment extends Fragment implements View.OnClickListene
                     btnSelectC.setBackgroundResource(R.drawable.bg_btn_chosse_is_false);
                     Toast.makeText(getActivity(), "Sai rồi", Toast.LENGTH_SHORT).show();
                 }
+                slow();
+                index++;
+                initQuestion(index);
                 break;
 
             default:

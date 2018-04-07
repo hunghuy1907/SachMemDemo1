@@ -16,6 +16,6 @@ public class DemoActivity extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getDataFromSheet= new GetDataFromSheet(this);
-        getDataFromSheet.getData();
+        getDataFromSheet.getDatas();
     }
 }

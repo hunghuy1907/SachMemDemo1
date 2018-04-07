@@ -11,6 +11,7 @@ import com.hungth.sachmemdemo.adapter.ClassAdapter;
 import com.hungth.sachmemdemo.database.GetDataFromSheet;
 import com.hungth.sachmemdemo.fragment.BookFragment;
 import com.hungth.sachmemdemo.fragment.ClassFragment;
+import com.hungth.sachmemdemo.model.Data;
 
 import java.util.List;
 
@@ -20,8 +21,13 @@ public class MainActivity extends AppCompatActivity {
 
     private ClassAdapter classAdapter;
     private List<String> classNames;
+    private List<Data> datas;
     private RecyclerView rcvClass;
-    private GetDataFromSheet getDataFromSheet ;
+    private GetDataFromSheet getDataFromSheet;
+
+    public List<Data> getDatas() {
+        return datas;
+    }
 
     public List<String> getClassNames() {
         return classNames;
@@ -31,15 +37,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getDataFromSheet= new GetDataFromSheet(this);
-        classNames=getDataFromSheet.getStringDataQuestion();
+        getDataFromSheet = new GetDataFromSheet(this);
+        datas = getDataFromSheet.getDatas();
+        classNames = getDataFromSheet.getStringDataQuestion();
         showMainFragment();
 
     }
 
     private void showMainFragment() {
         classFragment = new ClassFragment();
-
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.main_frame, classFragment).commit();

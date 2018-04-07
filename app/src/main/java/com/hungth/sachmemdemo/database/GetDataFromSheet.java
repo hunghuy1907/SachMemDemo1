@@ -33,6 +33,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.ValueRange;
+import com.hungth.sachmemdemo.model.Data;
 import com.hungth.sachmemdemo.model.Question;
 
 import java.io.IOException;
@@ -58,6 +59,7 @@ public class GetDataFromSheet
     private Activity activity;
     private ArrayList<Question> valueQuestions;
     private ArrayList<String> stringDataQuestion;
+    private List<Data> datas;
 
     public GetDataFromSheet(Activity activity) {
         this.activity = activity;
@@ -66,6 +68,12 @@ public class GetDataFromSheet
                 .setBackOff(new ExponentialBackOff());
         valueQuestions = new ArrayList<>();
         stringDataQuestion = new ArrayList<>();
+        datas = new ArrayList<>();
+    }
+
+    public List<Data> getDatas() {
+        getResultsFromApi();
+        return datas;
     }
 
     public ArrayList<Question> getData() {
@@ -251,9 +259,9 @@ public class GetDataFromSheet
         }
 
         private List<String> getDataFromApi() throws IOException {
-            Log.d(TAG, "getDataFromApi: ");
-            String spreadsheetId = "1CZ0C5FhQcCAzVDpSJ28bz7Y3K7lYPddgp0pzR_a35Qg";
-            String range = "demo!A3:L";
+//            Log.d(TAG, "getDataFromApi: ");
+            String spreadsheetId = "1CyD40d9rfdB5Q2Gk38Iv9eNffue1A5pWCz15mZV210A";
+            String range = "VD!A2:B";
             List<String> results = new ArrayList<String>();
             ValueRange response = this.mService.spreadsheets().values()
                     .get(spreadsheetId, range)
@@ -262,40 +270,43 @@ public class GetDataFromSheet
             List<List<Object>> values = response.getValues();
             if (values != null) {
 //                Log.d(TAG,"size" +values.size());
-                results.add("Name, Major");
                 for (List row : values) {
 //                    Log.d(TAG, "sao sao sao ");
-                    String tempChiaLop = row.get(5).toString();
-                    String chiaLop = tempChiaLop.trim();
-                    String tempTypeQuestion = row.get(9).toString();
+//                    String tempChiaLop = row.get(5).toString();
+//                    String chiaLop = tempChiaLop.trim();
+//                    String tempTypeQuestion = row.get(9).toString();
 //                    Log.d(TAG, "tempTypeQuestion: "+tempTypeQuestion);
-                    String typeQuestion = tempTypeQuestion.trim();
-                    String tempValue = row.get(7).toString();
-                    stringDataQuestion.add(tempValue);
-                    Log.d("ghghg", "size "+ stringDataQuestion.size());
-                    int x = tempValue.indexOf('{');
-                    String valueQuestion = "";
-                    for (int i = 0; i < x; i++) {
-                        valueQuestion += tempValue.charAt(i);
-                    }
-                    x++;
-                    Log.d(TAG, "temp Value: "+ tempValue);
-                    String resultQuestion = "";
-//                    Log.d(TAG, "truoc while ");
-                    while (tempValue.charAt(x) != '}') {
-                        resultQuestion += tempValue.charAt(x);
-                        x++;
-                    }
-//                    Log.d(TAG, "wao trong for");
-                    String temp = "Lop:_" + chiaLop + "_typeQuestion:_" + typeQuestion +
-                            "_valueQuestion_" + valueQuestion + "_resultQuestin_" + resultQuestion;
-                    Log.d(TAG, temp);
+//                    String typeQuestion = tempTypeQuestion.trim();
+//                    String tempValue = row.get(7).toString();
+//                    stringDataQuestion.add(tempValue);
+//                    Log.d("ghghg", "size "+ stringDataQuestion.size());
 
-                    valueQuestions.add(new Question(chiaLop, typeQuestion, valueQuestion, resultQuestion));
-                    results.add(temp);
+                    String data = row.get(0).toString().trim();
+                    String note = row.get(1).toString().trim();
+                    Data data1 = new Data(data, note);
+                    datas.add(data1);
+//                    int x = tempValue.indexOf('{');
+//                    String valueQuestion = "";
+//                    for (int i = 0; i < x; i++) {
+//                        valueQuestion += tempValue.charAt(i);
+//                    }
+//                    x++;
+////                    Log.d(TAG, "temp Value: "+ tempValue);
+//                    String resultQuestion = "";
+////                    Log.d(TAG, "truoc while ");
+//                    while (tempValue.charAt(x) != '}') {
+//                        resultQuestion += tempValue.charAt(x);
+//                        x++;
+//                    }
+//                    Log.d(TAG, "wao trong for");
+                    String temp = "data: " + data + "note:" + note;
+                    Log.d("dataSheet", temp);
+
+//                    valueQuestions.add(new Question(chiaLop, typeQuestion, valueQuestion, resultQuestion));
+//                    results.add(temp);
                 }
             }else {
-//                Log.d(TAG, "nulll");
+                Log.d(TAG, "nulll");
             }
             return results;
         }
